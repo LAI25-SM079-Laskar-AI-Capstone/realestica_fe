@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "tan-pearl";
+  src: url("../static/fonts/tan-pearl.otf") format("truetype");
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  .tan-pearl {
+    font-family: "tan-pearl", sans-serif;
+  }
+}

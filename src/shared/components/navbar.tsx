@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <nav className="w-full flex gap-2 p-2">
-      <Link to="/">Realestica</Link>
+      <Link to="/" className="tan-pearl">
+        Realestica
+      </Link>
       <ul className="flex gap-2 ml-auto">
-        <Link to="/houses">Houses</Link>
-        <Link to="/market-intelligence">Market</Link>
+        <Link to="/houses">Find a Home</Link>
+        <Link to="/market">Market Trends</Link>
       </ul>
     </nav>
   );

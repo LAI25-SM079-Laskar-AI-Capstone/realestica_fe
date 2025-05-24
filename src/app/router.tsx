@@ -1,7 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HousePages from "../pages/housePage";
 import LandingPage from "../pages/landingPage";
-import MarketIntelligence from "../pages/marketIntelligence";
+import MarketPage from "../pages/marketPage";
+import AboutPage from "../pages/aboutPage";
+import ContactPage from "../pages/contactPage";
 
 export const Router = () => {
   return (
@@ -9,7 +11,9 @@ export const Router = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/houses" element={<HousePages />} />
-        <Route path="/market-intelligence" element={<MarketIntelligence />} />
+        <Route path="/market" element={<MarketPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
     </BrowserRouter>
   );
