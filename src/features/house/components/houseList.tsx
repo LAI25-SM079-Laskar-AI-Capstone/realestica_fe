@@ -1,4 +1,5 @@
 import type { Property } from "../types/property"; // Sesuaikan path dengan lokasi model Property
+import { useNavigate } from "react-router-dom";
 
 interface PropertyListProps {
   data: Property[];
@@ -11,12 +12,19 @@ const PropertyList = ({
   variant = "compact",
   axis = "vertical",
 }: PropertyListProps) => {
+  const navigate = useNavigate();
+  const handleDetail = (id: string) => {
+    navigate(`/property/${id}`);
+  };
   return (
     <>
       {data.map((item) =>
         axis === "horizontal" ? (
           <figure
             key={item.id}
+            onClick={() => {
+              handleDetail(item.id);
+            }}
             className="grid grid-cols-2 rounded-xl  cursor-pointer transition duration-300 ease-in"
           >
             <div id="img-wrap" className="h-40 rounded-xl overflow-hidden">
@@ -86,6 +94,9 @@ const PropertyList = ({
         ) : (
           <figure
             key={item.id}
+            onClick={() => {
+              handleDetail(item.id);
+            }}
             className="grid grid-cols-[1fr] rounded-xl  cursor-pointer transition duration-300 ease-in"
           >
             <div id="img-wrap" className="h-40 rounded-xl overflow-hidden">

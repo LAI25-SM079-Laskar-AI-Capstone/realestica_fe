@@ -1,8 +1,15 @@
 import PropertyList from "../features/house/components/houseList";
+import HousePredict from "../features/house/components/housePredict";
+import HouseSearch from "../features/house/components/houseSearch";
 import useProperties from "../features/house/hooks/useProperties";
 // import Navbar from "../shared/components/navbar";
 
 const HousePages = () => {
+  const { houses: Recommended } = useProperties({
+    limit: 2,
+    offset: 8,
+  });
+
   const { houses: Houses } = useProperties({
     property_type: "House",
   });
@@ -26,7 +33,11 @@ const HousePages = () => {
             properti rumah di Jakarta dengan pengalaman pencarian yang mudah dan
             cerdas.
           </p>
+
+          <HouseSearch />
         </div>
+
+        <HousePredict Recommended={Recommended} />
 
         <section>
           {/* <h2 className="mb-2">House</h2> */}
