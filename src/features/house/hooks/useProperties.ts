@@ -7,13 +7,14 @@ const useProperties = (params: HouseQueryParams) => {
     isError,
     error,
     isPending,
+    isLoading,
   } = useQuery({
     initialData: [],
     queryKey: ["houses", params],
     queryFn: () => getHouses(params),
   });
 
-  return { houses, isError, error, isPending };
+  return { houses, isError, error, isPending, isLoading };
 };
 
 export default useProperties;

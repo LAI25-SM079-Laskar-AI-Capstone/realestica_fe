@@ -1,10 +1,10 @@
-import Navbar from "../shared/components/navbar";
+// import Navbar from "../shared/components/navbar";
 
 const LandingPage = () => {
   return (
-    <main className="min-h-screen max-w-[1000px] mx-auto p-4 gap-12">
-      <Navbar />
-      <main className="p-2">
+    <main className="min-h-screen p-4 gap-12">
+      {/* <Navbar /> */}
+      <main className="max-w-[1100px] mx-auto py-24">
         <h1>this is home</h1>
       </main>
     </main>

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Gwendolyn:wght@400;700&family=Kapakana:wght@300..400&family=Luxurious+Script&family=Pinyon+Script&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
 @import "tailwindcss";
 
 @font-face {
@@ -9,7 +11,19 @@
   html {
     @apply scroll-smooth;
   }
+  body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    letter-spacing: -0.05em;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
+
   .tan-pearl {
     font-family: "tan-pearl", sans-serif;
+  }
+
+  summary::marker {
+    content: none;
   }
 }
