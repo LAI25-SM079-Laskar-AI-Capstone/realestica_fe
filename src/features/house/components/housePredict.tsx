@@ -107,7 +107,7 @@ const HousePredict = ({ Recommended }: PropertyListProps) => {
             <div className="mt-6 p-4 rounded shadow bg-blue-50 max-w-xs mx-auto">
               <div className="text-gray-500 text-sm mb-1">Estimated Price</div>
               <div className="text-2xl font-bold text-blue-700 mb-1">
-                Rp 8.500.000
+                Rp 98.500.000
                 <span className="text-base font-medium text-gray-600">
                   {" "}
                   /bulan

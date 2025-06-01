@@ -5,18 +5,11 @@ import useProperties from "../features/house/hooks/useProperties";
 // import Navbar from "../shared/components/navbar";
 
 const HousePages = () => {
-  const { houses: Recommended } = useProperties({
-    limit: 2,
-    offset: 8,
-  });
+  const { houses: Recommended } = useProperties({});
 
-  const { houses: Houses } = useProperties({
-    property_type: "House",
-  });
+  const { houses: Houses } = useProperties({});
 
-  const { houses: apartements } = useProperties({
-    property_type: "Apartment",
-  });
+  const { houses: apartements } = useProperties({});
 
   return (
     <main className="max full p-4 gap-12  ">
