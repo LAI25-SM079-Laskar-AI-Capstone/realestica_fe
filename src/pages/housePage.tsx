@@ -1,13 +1,17 @@
 import PropertyList from "../features/house/components/houseList";
-import HousePredict from "../features/house/components/housePredict";
+import HousePredict from "../features/predict/components/housePredict";
 import HouseSearch from "../features/house/components/houseSearch";
 import useProperties from "../features/house/hooks/useProperties";
+
 // import Navbar from "../shared/components/navbar";
 
 const HousePages = () => {
-  const { houses: Recommended } = useProperties({});
+  // const { houses: Recommended } = useProperties({});
 
-  const { houses: Houses } = useProperties({});
+  const { houses: Houses } = useProperties({
+    limit: 6,
+    sort: "desc",
+  });
 
   const { houses: apartements } = useProperties({});
 
@@ -30,7 +34,7 @@ const HousePages = () => {
           <HouseSearch />
         </div>
 
-        <HousePredict Recommended={Recommended} />
+        <HousePredict />
 
         <section>
           {/* <h2 className="mb-2">House</h2> */}

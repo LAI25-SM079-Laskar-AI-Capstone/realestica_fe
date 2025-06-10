@@ -8,9 +8,6 @@
 }
 
 @layer base {
-  html {
-    @apply scroll-smooth;
-  }
   body {
     font-family: "Plus Jakarta Sans", sans-serif;
     letter-spacing: -0.05em;

@@ -4,9 +4,13 @@ import BackButton from "../shared/components/back-button";
 
 const PropertyPage = () => {
   const { id } = useParams<{ id: string }>();
-  console.log(id);
+  const numericId = Number(id);
 
   const { houses } = useProperties({});
+
+  if (isNaN(numericId)) {
+    return <p>ID tidak valid</p>;
+  }
 
   const formatDate = (dateInput: Date | string): string => {
     const date =
@@ -29,7 +33,7 @@ const PropertyPage = () => {
   return (
     <main>
       {houses
-        .filter((house) => house.id === id)
+        .filter((house) => Number(house.id) === numericId)
         .map((house) => (
           <main
             key={house.id}
