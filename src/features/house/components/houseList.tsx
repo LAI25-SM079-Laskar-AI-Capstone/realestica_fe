@@ -1,4 +1,4 @@
-import type { Property } from "../types/property"; // Sesuaikan path dengan lokasi model Property
+import type { Property } from "../types/property";
 import { useNavigate } from "react-router-dom";
 
 interface PropertyListProps {
