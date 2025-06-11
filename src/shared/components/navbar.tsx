@@ -49,7 +49,7 @@ const Navbar = () => {
       </div>
 
       {/* Bottom Floating Mobile Navbar */}
-      <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] bg-white border border-gray-200 shadow-lg rounded-full p-4 z-40 backdrop-blur-sm">
+      <div className="md:hidden fixed bottom-0 left-0 w-full bg-white/50 border border-gray-100 shadow-lg  p-4 z-40 backdrop-blur-sm">
         <ul className="flex justify-around items-center">
           {[...featureRoutes, ...additionalRoutes].map(
             ({ path, iconClassName, name }) => (
@@ -61,7 +61,7 @@ const Navbar = () => {
                   } hover:text-blue-400`}
                 >
                   {iconClassName && (
-                    <i className={`${iconClassName} text-xl`} />
+                    <i className={`${iconClassName} text-3xl`} />
                   )}
                 </Link>
               </li>
