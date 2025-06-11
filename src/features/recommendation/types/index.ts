@@ -4,25 +4,6 @@ export interface ApiResponse<T> {
   error: string | null;
 }
 
-export interface Property {
-  id: number;
-  title: string;
-  description: string;
-  monthly_installment_info: string;
-  price_display: string;
-  price_numeric: number;
-  location_text: string;
-  estimated_savings: string;
-  posted_by: string;
-  source_url: string;
-  property_type: 'House' | 'Apartment' | 'Other';
-  facilities: string[];
-  specifications: PropertySpecifications;
-  nearby_points_of_interest: NearbyPointsOfInterest;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface PropertySpecifications {
   bedrooms: number;
   bathrooms: number;
@@ -77,8 +58,27 @@ export interface SimilarPropertiesRequest {
   min_similarity?: number;
 }
 
+export interface RecommendedProperty {
+  id: string;
+  title: string;
+  description: string;
+  monthly_installment_info: string;
+  price_display: string;
+  price_numeric: number;
+  location_text: string;
+  estimated_savings: string;
+  posted_by: string;
+  source_url: string;
+  property_type: 'House' | 'Apartment' | 'Other';
+  facilities: string[];
+  specifications: PropertySpecifications;
+  nearby_points_of_interest: NearbyPointsOfInterest;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface RecommendationResponse {
-  recommendations: Property[];
+  recommendations: RecommendedProperty[];
   total_found: number;
   computation_time_ms: number;
   message: string;

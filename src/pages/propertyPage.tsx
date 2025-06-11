@@ -278,7 +278,7 @@ const PropertyPage = () => {
           </div>
 
           {/* Property Recommendations Component */}
-          <PropertyRecommendations recommendations={recommendations} loading={similarLoading} error={similarError} showRecommendations={true} title="" />
+          <PropertyRecommendations recommendations={recommendations} loading={similarLoading} error={similarError} showRecommendations={true} />
 
           {/* Loading State Khusus */}
           {similarLoading && (

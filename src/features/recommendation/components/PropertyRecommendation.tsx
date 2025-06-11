@@ -1,9 +1,28 @@
 import React from 'react';
-import type { Property } from '../types';
+import type { RecommendedProperty } from '../types';
 import PropertyCard from '../../house/components/houseCard';
+import type { Property } from '../../house/types/property';
+
+function normalizeToProperty(rec: RecommendedProperty): Property {
+  return {
+    ...rec,
+    monthly_installment_info: rec.monthly_installment_info ?? '',
+    estimated_savings: rec.estimated_savings ?? '',
+    facilities: rec.facilities ?? [],
+    nearby_points_of_interest_text: '', // opsional, atau generate dari rec.nearby_points_of_interest
+    createdAt: new Date(rec.createdAt),
+    updatedAt: new Date(rec.updatedAt),
+    specifications: {
+      ...rec.specifications,
+      carport_capacity: typeof rec.specifications.carport_capacity === 'string' ? parseInt(rec.specifications.carport_capacity, 10) || undefined : rec.specifications.carport_capacity,
+      maid_bathrooms: undefined,
+      maid_bedrooms: undefined,
+    },
+  };
+}
 
 interface PropertyRecommendationsProps {
-  recommendations: Property[];
+  recommendations: RecommendedProperty[];
   loading: boolean;
   error: string | null;
   showRecommendations: boolean;
@@ -38,7 +57,7 @@ const PropertyRecommendations: React.FC<PropertyRecommendationsProps> = ({ recom
         <div className="flex overflow-x-auto space-x-4 pb-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
           {recommendations.map((property) => (
             <div key={property.id} className="min-w-[280px] max-w-xs flex-shrink-0">
-              <PropertyCard item={property} variant="compact" axis="vertical" />
+              <PropertyCard item={normalizeToProperty(property)} variant="compact" axis="vertical" />
             </div>
           ))}
         </div>
