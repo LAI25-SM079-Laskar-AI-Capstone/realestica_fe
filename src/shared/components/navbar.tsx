@@ -31,13 +31,12 @@ const Navbar = () => {
 
   return (
     <nav className=" bg-slate-100 flex justify-between items-center px-20 py-4">
-      <Link to="/home" className="tan-pearl  text-blue-500 font-bold text-xs">
+      <Link to="/home" className="tan-pearl  text-slate-500 font-bold text-xs">
         Realestica
       </Link>
 
-      <ul className="bg-slate-800 rounded-full flex py-2 px-4 gap-4 ">
+      <ul className="rounded-full flex py-2 px-4 gap-4 ">
         {featureRoutes.map((route) => {
-          // Modifikasi di sini
           const isActive =
             route.path === "/"
               ? location.pathname === "/"
@@ -48,7 +47,9 @@ const Navbar = () => {
               <Link
                 to={route.path}
                 className={`${
-                  isActive ? "text-white" : "text-gray-500"
+                  isActive
+                    ? "text-blue-500 border-b border-b-blue-300"
+                    : "text-gray-500"
                 } flex items-center gap-1 hover:text-blue-300 transition-colors`}
               >
                 {route.icon}

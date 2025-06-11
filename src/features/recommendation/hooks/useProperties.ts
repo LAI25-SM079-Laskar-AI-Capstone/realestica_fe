@@ -23,9 +23,17 @@ const useProperties = (params: HouseQueryParams) => {
     queryKey: ["RecommendationProperty", params],
     queryFn: () => getRecommendationProperty(params),
   });
-  // Ambil data dari .data field
+
   const Property = RecommendationProperty?.data || [];
-  return { Property, isError, error, isPending, isLoading };
+  const Meta = RecommendationProperty?.meta || {
+    total: 0,
+    limit: 0,
+    offset: 0,
+    has_next: false,
+    has_prev: false,
+  };
+
+  return { Property, Meta, isError, error, isPending, isLoading };
 };
 
 export default useProperties;

@@ -1,4 +1,12 @@
-// Interface untuk predict request
+export interface BasicFormData {
+  s_kamar_tidur: string;
+  s_kamar_mandi: string;
+  s_luas_bangunan: string;
+  s_luas_tanah: string;
+  kabupaten: string;
+  s_sertifikat: string;
+}
+
 export interface PredictRequestData {
   // Features (f_)
   f_taman: number;
@@ -32,11 +40,11 @@ export interface PredictRequestData {
   f_one_gate_system: number;
 
   // Specifications (s_)
-  s_jumlah_lantai: number;
-  s_kamar_mandi: number;
-  s_kamar_tidur: number;
-  s_luas_bangunan: number;
-  s_luas_tanah: number;
+  s_kamar_mandi: string;
+  s_jumlah_lantai: string;
+  s_kamar_tidur: string;
+  s_luas_bangunan: string;
+  s_luas_tanah: string;
 
   // Points of Interest (poi_)
   poi_perbelanjaan: number;
@@ -48,7 +56,6 @@ export interface PredictRequestData {
   s_sertifikat: string;
 }
 
-// Interface untuk predict response data
 export interface PredictResponseData {
   prediksi_harga: number;
   prediksi_harga_formatted: string;

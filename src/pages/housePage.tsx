@@ -58,17 +58,25 @@ const HousePages = () => {
             <p>Error: {error?.message}</p>
           ) : (
             <>
-              <article className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] lg:grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))] gap-3">
-                <PropertyList data={houses} />
-              </article>
+              <div>
+                <div className="flex justify-end items-baseline mb-4 gap-4">
+                  <span className="text-lg text-slate-400 font-semibold">
+                    Total: {meta.total}
+                  </span>
+                </div>
 
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                hasPrev={meta.has_prev}
-                hasNext={meta.has_next}
-                onPageChange={handlePageChange}
-              />
+                <article className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] lg:grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))] gap-3">
+                  <PropertyList data={houses} />
+                </article>
+
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  hasPrev={meta.has_prev}
+                  hasNext={meta.has_next}
+                  onPageChange={handlePageChange}
+                />
+              </div>
             </>
           )}
         </section>

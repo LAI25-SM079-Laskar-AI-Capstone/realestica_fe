@@ -1,30 +1,30 @@
 export interface Property {
-  id: string; // Unique identifier for the property
+  id: string;
   title: string;
   description: string;
   monthly_installment_info?: string;
-  price_display: string; // Changed from 'price' to avoid confusion with 'price_numeric' and be more descriptive
+  price_display: string;
   price_numeric: number;
-  location_text: string; // Changed from 'location' for clarity
-  estimated_savings?: string; // Changed from 'savings' for clarity
+  location_text: string;
+  estimated_savings?: string;
   facilities?: string[];
   specifications: {
-    bedrooms: number; // Changed from 'kamar_tidur'
-    bathrooms: number; // Changed from 'kamar_mandi'
-    land_area: string; // Changed from 'luas_tanah'
-    building_area: string; // Changed from 'luas_bangunan'
-    carport_capacity?: number; // Changed from 'carport' for clarity
-    certificate_type: string; // Changed from 'sertifikat'
-    electricity_power: string; // Changed from 'daya_listrik'
-    maid_bedrooms?: number; // Changed from 'kamar_tidur_pembantu'
-    maid_bathrooms?: number; // Changed from 'kamar_mandi_pembantu'
-    number_of_floors: number; // Changed from 'jumlah_lantai'
-    property_condition: string; // Changed from 'kondisi_properti'
+    bedrooms: number;
+    bathrooms: number;
+    land_area: string;
+    building_area: string;
+    carport_capacity?: number;
+    certificate_type: string;
+    electricity_power: string;
+    maid_bedrooms?: number;
+    maid_bathrooms?: number;
+    number_of_floors: number;
+    property_condition: string;
   };
-  nearby_points_of_interest_text?: string; // Changed from 'poi_structured_text'
+  nearby_points_of_interest_text?: string;
   posted_by: string;
-  property_type: "House" | "Apartment" | "Other"; // Values translated
-  source_url: string; // Changed from 'url' for more specific meaning
+  property_type: "House" | "Apartment" | "Other";
+  source_url: string;
   createdAt: Date;
   updatedAt: Date;
 }

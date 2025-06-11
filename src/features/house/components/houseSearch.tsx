@@ -13,19 +13,22 @@ const HouseSearch = () => {
     }
   };
   return (
-    <form onSubmit={handleSearchSubmit} className="mb-8 flex justify-center">
+    <form
+      onSubmit={handleSearchSubmit}
+      className="mb-8 flex justify-center border border-slate-200 rounded-4xl overflow-hidden "
+    >
       <input
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search properties..."
-        className="px-4 py-2 border rounded-l-md focus:outline-none"
+        className="pl-8 py-2  rounded-l -md focus:outline-none"
       />
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700"
+        className="bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded-r-md hover:bg-blue-700"
       >
-        <i className="bx  bx-search"></i>
+        <i className="bx  bx-search font-bold text-2xl"></i>
       </button>
     </form>
   );
