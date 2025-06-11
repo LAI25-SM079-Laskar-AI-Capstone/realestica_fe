@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { getRecommendationProperty, getSimilarProperties, getPropertyById } from '../api/recommendation';
+import { getRecommendationProperty, getSimilarProperties } from '../api/recommendation';
 import type { Property, RecommendationByCriteriaRequest, SimilarPropertiesRequest } from '../types';
 
 interface UseRecommendationState {
@@ -94,38 +94,5 @@ export function useRecommendation() {
     getRecommendations,
     getSimilar,
     clearRecommendations,
-  };
-}
-
-// src/features/recommendation/hooks/useProperty.ts
-export function useProperty() {
-  const [property, setProperty] = useState<Property | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchProperty = useCallback(async (propertyId: number) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await getPropertyById(propertyId);
-
-      if (response.status === 'success') {
-        setProperty(response.data);
-      } else {
-        setError(response.error || 'Failed to fetch property');
-      }
-    } catch (error) {
-      setError(error instanceof Error ? error.message : 'An error occurred');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  return {
-    property,
-    loading,
-    error,
-    fetchProperty,
   };
 }
