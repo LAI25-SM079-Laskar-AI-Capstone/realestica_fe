@@ -1,5 +1,13 @@
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+
 import BackButton from "../shared/components/back-button";
+
+import { useRecommendation } from "../features/recommendation/hooks/useRecommendation";
+import PropertyRecommendations from "../features/recommendation/components/propertyRecommendation";
+import type { SimilarPropertiesRequest } from "../features/recommendation/types";
+
+import type { Property } from "../features/house/types/property";
 import usePropertyById from "../features/house/hooks/usePropertyById";
 
 const PropertyPage = () => {
@@ -7,6 +15,32 @@ const PropertyPage = () => {
   const numericId = Number(id);
 
   const { data: house, isLoading, isError } = usePropertyById(numericId);
+
+  const {
+    recommendations,
+    loading: similarLoading,
+    error: similarError,
+    getSimilar,
+    // totalFound,
+    computationTime,
+  } = useRecommendation();
+
+  const convertPropertyToSimilarRequest = (
+    property: Property
+  ): SimilarPropertiesRequest => {
+    return {
+      property_id: Number(property.id),
+      num_recommendations: 5,
+      min_similarity: 0.1,
+    };
+  };
+
+  useEffect(() => {
+    if (house && house.id) {
+      const similarRequest = convertPropertyToSimilarRequest(house);
+      getSimilar(similarRequest);
+    }
+  }, [house, getSimilar]);
 
   if (isLoading)
     return (
@@ -22,8 +56,8 @@ const PropertyPage = () => {
       </main>
     );
 
-  console.log("House Data:", house);
-  console.log("Specifications:", house.specifications);
+  // console.log("House Data:", house);
+  // console.log("Specifications:", house.specifications);
 
   if (isNaN(numericId)) {
     return <p>ID tidak valid</p>;
@@ -41,7 +75,7 @@ const PropertyPage = () => {
     });
   };
 
-  const images = [
+  const images_p = [
     { id: 1, src: "image.png" },
     { id: 2, src: "image.png" },
     { id: 3, src: "image.png" },
@@ -53,26 +87,26 @@ const PropertyPage = () => {
     <main className="p-4">
       <div
         key={house.id}
-        className="relative max-w-[1100px] mx-auto py-12  items-start gap-12"
+        className="relative max-w-[1100px]  mx-auto py-12  items-start gap-12"
       >
         <BackButton />
 
-        <div id="container" className="flex gap-6">
-          <div id="content" className="w-[70%]">
+        <section id="container" className="lg:flex-row flex flex-col gap-6">
+          <div id="content" className="lg:w-[70%] w-full">
             <header className=" pb-4 mb-6 border-b border-gray-200">
               <article className="bg-slate-100 h-96 rounded-xl grid grid-cols-4 grid-rows-2 p-4 gap-2 mb-6">
-                {images && images.length > 0 ? (
+                {images_p && images_p.length > 0 ? (
                   <>
                     {/* Gambar pertama: span 2 kolom & 2 baris */}
                     <div className="col-span-2 row-span-2 rounded-2xl overflow-hidden">
                       <img
-                        src={`/${images[0].src}`} // Pastikan file ada di public/
+                        src={`/${images_p[0].src}`} // Pastikan file ada di public/
                         alt={`property image 1`}
                         className="w-full h-full object-cover"
                       />
                     </div>
                     {/* Gambar 2-5: masing-masing dalam 1 sel */}
-                    {images.slice(1, 5).map((img, idx) => (
+                    {images_p.slice(1, 5).map((img, idx) => (
                       <div
                         key={img.id}
                         className="rounded-2xl overflow-hidden "
@@ -94,18 +128,18 @@ const PropertyPage = () => {
 
               <div id="card-header" className="flex justify-between">
                 <div id="title">
-                  <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+                  <h1 className="text-xl md:text-3xl lg:text-4xl  font-bold text-gray-800 mb-2">
                     {house.title}
                   </h1>
-                  <p className="text-xl text-gray-600 mb-1">
+                  <p className="text-md md:text-xl text-gray-600 mb-1">
                     <i className="bx  bx-location"></i> {house.location_text}
                   </p>
                 </div>
 
                 <div id="option" className="flex justify-between gap-2">
-                  <i className="bx  bx-share p-2 bg-slate-50 h-fit hover:bg-slate-100 text-xl hover:cursor-pointer rounded-full"></i>
-                  <i className="bx  bx-bookmarks p-2 bg-slate-50 h-fit hover:bg-slate-100 text-xl hover:cursor-pointer rounded-full"></i>
-                  <i className="bx  bx-dots-horizontal-rounded p-2 bg-slate-50 h-fit hover:bg-slate-100 text-xl hover:cursor-pointer rounded-full"></i>
+                  <i className="bx  bx-share p-2 bg-slate-50 h-fit hover:bg-slate-100 text-sm lg:text-xl hover:cursor-pointer rounded-full"></i>
+                  <i className="bx  bx-bookmarks p-2 bg-slate-50 h-fit hover:bg-slate-100 text-sm lg:text-xl hover:cursor-pointer rounded-full"></i>
+                  <i className="bx  bx-dots-horizontal-rounded p-2 bg-slate-50 h-fit hover:bg-slate-100 text-sm lg:text-xl hover:cursor-pointer rounded-full"></i>
                 </div>
               </div>
 
@@ -113,11 +147,11 @@ const PropertyPage = () => {
                 id="price"
                 className="flex flex-wrap items-center justify-between mt-4"
               >
-                <p className="text-6xl font-semibold text-blue-600">
+                <p className="text-4xl md:text-5xl lg:text-6xl font-semibold text-blue-600">
                   {house.price_display}
                 </p>
                 {house.monthly_installment_info && (
-                  <p className="text-md text-green-600 bg-green-100 px-3 py-1 rounded-full">
+                  <p className="text-sm md:text-md text-green-600 bg-green-100 px-3 py-1 rounded-full">
                     {house.monthly_installment_info}
                   </p>
                 )}
@@ -198,7 +232,7 @@ const PropertyPage = () => {
             </main>
           </div>
 
-          <aside className="w-[30%] h-full sticky top-4 z-10">
+          <aside className="lg:w-[30%] w-full h-full lg:sticky lg:top-4 z-10">
             <section
               id="facilities"
               className="w-full bg-slate-100 p-4 rounded-xl mb-8"
@@ -318,7 +352,108 @@ const PropertyPage = () => {
               </button>
             </section>
           </aside>
-        </div>
+        </section>
+
+        {/* Similar Properties Section */}
+        <section
+          id="similar-properties"
+          className="mt-12 pt-8 border-t border-gray-200"
+        >
+          {/* Stats Info */}
+          {recommendations.length > 0 && (
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-sm text-gray-500">
+                  Memproses selama {computationTime.toFixed(2)} detik
+                </span>
+                <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
+                  Similarity Algorithm
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <details>
+                  <summary>
+                    <h2 className="text-3xl font-bold text-gray-800  flex items-end gap-2">
+                      Rekomendasi Rumah Serupa
+                    </h2>
+                  </summary>
+                  <p className="text-gray-600">
+                    Properti yang dipilih khusus berdasarkan karakteristik
+                    serupa yang mungkin Anda minati.
+                  </p>
+                </details>
+                {/* Property Recommendations Component */}
+                <article className="flex flex-nowrap overflow-x-auto rounded-xl p-6 border border-blue-200 gap-4 hide-scrollbar">
+                  <PropertyRecommendations
+                    recommendations={recommendations}
+                    loading={similarLoading}
+                    error={similarError}
+                    showRecommendations={true}
+                  />
+                </article>
+              </div>
+            </div>
+          )}
+
+          {/* Loading State Khusus */}
+          {similarLoading && (
+            <div className="flex items-center justify-center py-12">
+              <div className="flex items-center space-x-3 text-gray-600">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <span className="text-lg font-medium">
+                  Mencari properti serupa...
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Enhanced No Results State */}
+          {!similarLoading && recommendations.length === 0 && !similarError && (
+            <div className="text-center py-16 bg-gray-50 rounded-xl">
+              <div className="max-w-md mx-auto">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                  Belum Ada Properti Serupa
+                </h3>
+                <p className="text-gray-500 mb-6">
+                  Saat ini belum ada properti lain yang memiliki karakteristik
+                  serupa dengan properti ini. Coba periksa kembali nanti atau
+                  jelajahi properti lainnya.
+                </p>
+                <button
+                  onClick={() => (window.location.href = "/properties")}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                >
+                  Jelajahi Properti Lain
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Error State */}
+          {similarError && (
+            <div className="text-center py-12 bg-red-50 rounded-xl border border-red-200">
+              <div className="max-w-md mx-auto">
+                <div className="text-4xl mb-4">⚠️</div>
+                <h3 className="text-lg font-semibold text-red-700 mb-2">
+                  Gagal Memuat Properti Serupa
+                </h3>
+                <p className="text-red-600 text-sm mb-4">{similarError}</p>
+                <button
+                  onClick={() => {
+                    const similarRequest =
+                      convertPropertyToSimilarRequest(house);
+                    getSimilar(similarRequest);
+                  }}
+                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Coba Lagi
+                </button>
+              </div>
+            </div>
+          )}
+        </section>
       </div>
     </main>
   );

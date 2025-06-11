@@ -1,10 +1,17 @@
-import React, { useState } from "react";
-import { facilities } from "../utils/constant";
-import type { BasicFormData, PredictResponseData } from "../types/predict";
+import React, { useEffect, useState } from "react";
 import PredictionResultSkeleton from "./predictionResultSkeleton";
+import { facilities, pointOfInterest } from "../utils/constant";
+import { useRecommendation } from "../../recommendation/hooks/useRecommendation";
+import PropertyRecommendations from "../../recommendation/components/propertyRecommendation";
+import type { BasicFormData, PredictResponseData } from "../types/predict";
+import type { RecommendationCriteria } from "../../recommendation/types";
 
 interface HousePredictFormProps {
-  onSubmit: (formData: BasicFormData, selectedFacilities: string[]) => void;
+  onSubmit: (
+    formData: BasicFormData,
+    selectedFacilities: string[],
+    selectedPointsOfInterest: string[]
+  ) => void;
   isSubmitting: boolean;
   predictionResult?: PredictResponseData | null;
   error?: Error | null;
@@ -27,6 +34,17 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
 
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
   const [showLoading, setShowLoading] = useState(false);
+  const [selectedPointsOfInterest, setSelectedPointsOfInterest] = useState<
+    string[]
+  >([]);
+
+  // Hook untuk rekomendasi
+  const {
+    recommendations,
+    loading: recommendationLoading,
+    error: recommendationError,
+    getRecommendations,
+  } = useRecommendation();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -46,15 +64,85 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
     );
   };
 
+  const handlePointOfInterestChange = (poi: string) => {
+    setSelectedPointsOfInterest((prev) =>
+      prev.includes(poi) ? prev.filter((p) => p !== poi) : [...prev, poi]
+    );
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setShowLoading(true);
     setTimeout(() => {
-      onSubmit(formData, selectedFacilities);
+      onSubmit(formData, selectedFacilities, selectedPointsOfInterest);
 
       setShowLoading(false);
     }, 2000);
   };
+
+  // Function untuk convert form data ke criteria
+  const convertFormDataToCriteria = (
+    formData: BasicFormData,
+    facilities: string[],
+    predictionPrice: number
+  ): RecommendationCriteria => {
+    // Buat range harga berdasarkan prediksi (±10% dari hasil prediksi)
+    const priceVariation = predictionPrice * 0.1;
+    const minPrice = Math.max(0, predictionPrice - priceVariation);
+    const maxPrice = predictionPrice + priceVariation;
+
+    return {
+      min_price: Math.floor(minPrice),
+      max_price: Math.ceil(maxPrice),
+      location: formData.kabupaten,
+      property_type: "House", // Asumsi untuk house predict form
+      min_bedrooms:
+        parseInt(formData.s_kamar_tidur) - 1 > 0
+          ? parseInt(formData.s_kamar_tidur) - 1
+          : 1,
+      max_bedrooms: parseInt(formData.s_kamar_tidur) + 1,
+      min_bathrooms:
+        parseInt(formData.s_kamar_mandi) - 1 > 0
+          ? parseInt(formData.s_kamar_mandi) - 1
+          : 1,
+      max_bathrooms: parseInt(formData.s_kamar_mandi) + 1,
+      min_building_area:
+        parseInt(formData.s_luas_bangunan) - 20 > 0
+          ? parseInt(formData.s_luas_bangunan) - 20
+          : 1,
+      max_building_area: parseInt(formData.s_luas_bangunan) + 20,
+      min_land_area:
+        parseInt(formData.s_luas_tanah) - 20 > 0
+          ? parseInt(formData.s_luas_tanah) - 20
+          : 1,
+      max_land_area: parseInt(formData.s_luas_tanah) + 20,
+      required_facilities: facilities.length > 0 ? facilities : undefined,
+      certificate_type: formData.s_sertifikat.toUpperCase(),
+      // // Weight untuk scoring
+      // price_weight: 0.3,
+      // location_weight: 0.2,
+      // size_weight: 0.2,
+      // features_weight: 0.2,
+      // condition_weight: 0.1,
+      // use_similarity_scoring: true,
+    };
+  };
+
+  // Effect untuk auto-fetch rekomendasi setelah prediksi berhasil
+  useEffect(() => {
+    if (predictionResult?.prediksi_harga) {
+      const criteria = convertFormDataToCriteria(
+        formData,
+        selectedFacilities,
+        predictionResult.prediksi_harga
+      );
+
+      getRecommendations({
+        criteria,
+        num_recommendations: 5, // Ambil 5 rekomendasi
+      });
+    }
+  }, [predictionResult, formData, selectedFacilities, getRecommendations]);
 
   return (
     <details
@@ -227,7 +315,6 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
                   ({selectedFacilities.length} dipilih)
                 </span>
               </span>
-              <span className="text-sm">▼</span>
             </summary>
             <div className="p-4">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-60 overflow-y-auto">
@@ -251,6 +338,45 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
                 <div className="mt-3 p-2 bg-blue-50 rounded">
                   <p className="text-sm text-blue-700">
                     <strong>Dipilih:</strong> {selectedFacilities.join(", ")}
+                  </p>
+                </div>
+              )}
+            </div>
+          </details>
+
+          {/* Point of Interest */}
+          <details className="w-full border border-gray-200 rounded-lg">
+            <summary className="cursor-pointer p-4 bg-gray-50 hover:bg-gray-100 font-medium text-gray-700 flex justify-between items-center">
+              <span>
+                Pilih Point of Interest.
+                <span className="text-slate-400">
+                  ({selectedPointsOfInterest.length} dipilih)
+                </span>
+              </span>
+            </summary>
+            <div className="p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {pointOfInterest.map((poi) => (
+                  <label
+                    key={poi}
+                    className="flex items-center gap-2 text-sm hover:bg-gray-50 p-2 rounded"
+                  >
+                    <input
+                      type="checkbox"
+                      value={poi}
+                      checked={selectedPointsOfInterest.includes(poi)}
+                      onChange={() => handlePointOfInterestChange(poi)}
+                      className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                    />
+                    {poi}
+                  </label>
+                ))}
+              </div>
+              {selectedPointsOfInterest.length > 0 && (
+                <div className="mt-3 p-2 bg-blue-50 rounded">
+                  <p className="text-sm text-blue-700">
+                    <strong>Dipilih:</strong>{" "}
+                    {selectedPointsOfInterest.join(", ")}
                   </p>
                 </div>
               )}
@@ -290,16 +416,21 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
         <PredictionResultSkeleton />
       ) : (
         predictionResult && (
-          <div className="bg-white m-6">
-            <div id="result" className="flex gap-4 ">
+          <div className="flex flex-col gap-6 bg-white m-6">
+            <div id="predictionResult" className="flex gap-4">
               <i className="bxr  bxs-sparkles text-4xl text-blue-600"></i>
 
-              <section className="w-220 relative p-6 bg-white rounded-xl  overflow-hidden border border-blue-200">
-                <div className="relative z-10">
-                  <h4 className="text-sm font-semibold text-gray-500 mb-1 flex items-center justify-between">
-                    <span>ESTIMASI PROPERTI ANDA</span>
+              <section className="w-220 relative overflow-hidden">
+                <div id="title" className="flex items-center gap-2 mb-2">
+                  <h4 className="text-lg font-semibold text-gray-800 ">
+                    Estimasi Properti Anda
                   </h4>
-                  <div className="mb-6 mt-2">
+                  <span className="w-fit bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
+                    Regression Algorithm
+                  </span>
+                </div>
+                <article className=" p-6 bg-white rounded-xl  border border-blue-200 ">
+                  <div className="mb-6">
                     <div className="text-4xl font-bold text-blue-700">
                       {`Rp ${
                         predictionResult?.prediksi_harga?.toLocaleString(
@@ -321,15 +452,34 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
                       disarankan untuk melakukan <i>appraisal</i> profesional.
                     </p>
                   </div>
-                </div>
+                </article>
               </section>
             </div>
 
-            <section className="mt-8 text-center">
-              <p className="text-lg text-gray-700 mb-4">
-                Lihat properti serupa yang tersedia:
-              </p>
-            </section>
+            <div id="recommendation" className="flex gap-4 ">
+              <i className="bxr  bxs-sparkles text-4xl text-blue-600"></i>
+
+              <section className="w-220 relative  bg-white  overflow-hidden ">
+                <div id="title" className="flex items-center gap-2 mb-2">
+                  <h4 className="text-lg font-semibold text-gray-800 ">
+                    Lihat properti serupa yang tersedia
+                  </h4>
+                  <span className="w-fit bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
+                    Similarity Algorithm
+                  </span>
+                </div>
+                <article className="flex flex-nowrap overflow-x-auto rounded-xl p-6 border border-blue-200 gap-4 hide-scrollbar">
+                  <PropertyRecommendations
+                    recommendations={recommendations}
+                    loading={recommendationLoading}
+                    error={recommendationError}
+                    showRecommendations={!!predictionResult}
+                    axis="horizontal"
+                    variant="compact"
+                  />
+                </article>
+              </section>
+            </div>
           </div>
         )
       )}

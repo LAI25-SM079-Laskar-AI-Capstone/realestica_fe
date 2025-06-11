@@ -1,17 +1,14 @@
-import { recommendation_api } from "../../../shared/utils/api";
-import type { ApiResponse } from "../types/apiResponse";
-import type { Property } from "../types/property";
+import { recommendation_api } from '../../../shared/utils/api';
+import type { ApiResponse, Property, RecommendationByCriteriaRequest, SimilarPropertiesRequest, RecommendationResponse } from '../types';
 
-export interface HouseQueryParams {
-  limit?: number;
-  offset?: number;
-  property_type?: string;
-  filter?: string;
-  sort?: "asc" | "desc";
+export async function getRecommendationProperty(params: RecommendationByCriteriaRequest): Promise<ApiResponse<RecommendationResponse>> {
+  return await recommendation_api.post<ApiResponse<RecommendationResponse>>('/recommendations/criteria', params);
 }
 
-export async function getRecommendationProperty(params: HouseQueryParams) {
-  return await recommendation_api.get<ApiResponse<Property[]>>("/property", {
-    params: params as Record<string, string>,
-  });
+export async function getSimilarProperties(params: SimilarPropertiesRequest): Promise<ApiResponse<RecommendationResponse>> {
+  return await recommendation_api.post<ApiResponse<RecommendationResponse>>('/recommendations/similar', params);
+}
+
+export async function getPropertyById(propertyId: number): Promise<ApiResponse<Property>> {
+  return await recommendation_api.get<ApiResponse<Property>>(`/properties/${propertyId}`);
 }
