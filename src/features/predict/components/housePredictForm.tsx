@@ -384,9 +384,9 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
           <button
             type="submit"
             disabled={isSubmitting || showLoading}
-            className={`w-fit py-3 px-6  rounded-full font-medium transition-colors hover:cursor-pointer ${
+            className={`w-fit py-3 px-6 text-white  rounded-full font-medium transition-colors hover:cursor-pointer ${
               isSubmitting || showLoading
-                ? "bg-gray-400 cursor-not-allowed "
+                ? " bg-gray-400 cursor-not-allowed "
                 : "bg-blue-600 hover:bg-blue-700 "
             }`}
           >
