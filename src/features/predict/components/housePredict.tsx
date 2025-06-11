@@ -37,7 +37,7 @@ const HousePredict: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto">
       <HousePredictForm
         onSubmit={handleSubmitForm}
         isSubmitting={isPending}

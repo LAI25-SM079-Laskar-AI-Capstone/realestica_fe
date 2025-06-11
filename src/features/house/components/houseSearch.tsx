@@ -28,7 +28,7 @@ const HouseSearch = () => {
         type="submit"
         className="bg-blue-600 text-white flex items-center justify-center px-4 py-2 rounded-r-md hover:bg-blue-700"
       >
-        <i className="bx  bx-search font-bold text-2xl"></i>
+        <i className="bx  bx-search text-2xl"></i>
       </button>
     </form>
   );

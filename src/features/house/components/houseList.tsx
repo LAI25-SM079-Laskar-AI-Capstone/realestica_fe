@@ -1,3 +1,4 @@
+import { images } from "../../predict/utils/constant";
 import type { Property } from "../types/property";
 import { useNavigate } from "react-router-dom";
 
@@ -18,8 +19,9 @@ const PropertyList = ({
   };
   return (
     <>
-      {data.map((item) =>
-        axis === "horizontal" ? (
+      {data.map((item, index) => {
+        const imageUrl = images[index % images.length];
+        return axis === "horizontal" ? (
           <figure
             key={item.id}
             onClick={() => {
@@ -29,7 +31,7 @@ const PropertyList = ({
           >
             <div id="img-wrap" className="h-40 rounded-xl overflow-hidden">
               <img
-                src="image.png"
+                src={imageUrl}
                 alt="property image"
                 className="w-full h-full object-cover"
               />
@@ -101,9 +103,9 @@ const PropertyList = ({
           >
             <div id="img-wrap" className="h-40 rounded-xl overflow-hidden">
               <img
-                src="image.png"
+                src={imageUrl} // Gunakan imageUrl di sini
                 alt="property image"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
             </div>
 
@@ -165,8 +167,8 @@ const PropertyList = ({
               </div>
             </div>
           </figure>
-        )
-      )}
+        );
+      })}
     </>
   );
 };
