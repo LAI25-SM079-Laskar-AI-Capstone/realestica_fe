@@ -3,6 +3,7 @@ import PropertyList from "../features/house/components/houseList";
 import useProperties from "../features/house/hooks/useProperties";
 import BackButton from "../shared/components/back-button";
 import Pagination from "../shared/components/Pagination";
+import HouseSearch from "../features/house/components/houseSearch";
 
 const PAGE_LIMIT = 6;
 
@@ -32,9 +33,7 @@ const ResultPage = () => {
     <main className="min-h-screen max-w-[1100px] mx-auto py-12">
       <BackButton />
 
-      <h2 className="text-3xl font-bold mb-6">
-        Search Results for "{filterQuery}"
-      </h2>
+      <HouseSearch />
 
       {isLoading ? (
         <p>Loading...</p>
@@ -42,6 +41,9 @@ const ResultPage = () => {
         <p>Error: {error?.message}</p>
       ) : (
         <>
+          <h2 className="text-3xl font-bold mb-6">
+            {meta.total} Results Found for "{filterQuery}"
+          </h2>
           <article className="grid grid-cols-1 gap-4">
             <PropertyList data={houses} axis="horizontal" />
           </article>

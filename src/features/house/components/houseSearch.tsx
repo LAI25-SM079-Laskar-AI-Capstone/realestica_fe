@@ -15,7 +15,7 @@ const HouseSearch = () => {
   return (
     <form
       onSubmit={handleSearchSubmit}
-      className="mb-8 flex justify-center border border-slate-200 rounded-4xl overflow-hidden "
+      className="w-full max-w-[400px] mb-8 flex justify-between border border-slate-200 rounded-4xl overflow-hidden "
     >
       <input
         type="text"
