@@ -9,6 +9,7 @@ import type { SimilarPropertiesRequest } from "../features/recommendation/types"
 
 import type { Property } from "../features/house/types/property";
 import usePropertyById from "../features/house/hooks/usePropertyById";
+import DescriptionSection from "../features/house/components/houseDescription";
 
 const PropertyPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -92,66 +93,65 @@ const PropertyPage = () => {
         <BackButton />
 
         <section id="container" className="lg:flex-row flex flex-col gap-6">
-          <div id="content" className="lg:w-[70%] w-full">
-            <header className=" pb-4 mb-6 border-b border-gray-200">
-              <article className="bg-slate-100 h-96 rounded-xl grid grid-cols-4 grid-rows-2 p-4 gap-2 mb-6">
+          <div id="content" className="w-full lg:w-[70%]">
+            <header className="pb-6 border-b border-gray-200">
+              <article className="bg-slate-100 rounded-xl p-4 mb-6 space-y-2">
                 {images_p && images_p.length > 0 ? (
                   <>
-                    {/* Gambar pertama: span 2 kolom & 2 baris */}
-                    <div className="col-span-2 row-span-2 rounded-2xl overflow-hidden">
+                    {/* Gambar utama */}
+                    <div className="rounded-2xl overflow-hidden aspect-[4/3]">
                       <img
-                        src={`/${images_p[0].src}`} // Pastikan file ada di public/
-                        alt={`property image 1`}
+                        src={`/${images_p[0].src}`}
+                        alt="Gambar Utama"
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    {/* Gambar 2-5: masing-masing dalam 1 sel */}
-                    {images_p.slice(1, 5).map((img, idx) => (
-                      <div
-                        key={img.id}
-                        className="rounded-2xl overflow-hidden "
-                      >
-                        <img
-                          src={`/${img.src}`} // Pastikan file ada di public/
-                          alt={`property image ${idx + 2}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    ))}
+
+                    {/* Grid gambar kecil */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {images_p.slice(1, 5).map((img, idx) => (
+                        <div
+                          key={img.id}
+                          className="rounded-2xl overflow-hidden aspect-square"
+                        >
+                          <img
+                            src={`/${img.src}`}
+                            alt={`Gambar ${idx + 2}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </>
                 ) : (
-                  <div className="col-span-4 row-span-2 flex items-center justify-center h-80 bg-gray-100 rounded-xl">
-                    <span className="text-gray-400">Tidak ada gambar</span>
+                  <div className="h-60 flex items-center justify-center bg-gray-100 rounded-xl text-gray-500">
+                    Tidak ada gambar tersedia.
                   </div>
                 )}
               </article>
 
-              <div id="card-header" className="flex justify-between">
-                <div id="title">
-                  <h1 className="text-xl md:text-3xl lg:text-4xl  font-bold text-gray-800 mb-2">
+              <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
+                <div>
+                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">
                     {house.title}
                   </h1>
-                  <p className="text-md md:text-xl text-gray-600 mb-1">
-                    <i className="bx  bx-location"></i> {house.location_text}
+                  <p className="text-md md:text-lg text-gray-600">
+                    <i className="bx bx-location"></i> {house.location_text}
                   </p>
                 </div>
-
-                <div id="option" className="flex justify-between gap-2">
-                  <i className="bx  bx-share p-2 bg-slate-50 h-fit hover:bg-slate-100 text-sm lg:text-xl hover:cursor-pointer rounded-full"></i>
-                  <i className="bx  bx-bookmarks p-2 bg-slate-50 h-fit hover:bg-slate-100 text-sm lg:text-xl hover:cursor-pointer rounded-full"></i>
-                  <i className="bx  bx-dots-horizontal-rounded p-2 bg-slate-50 h-fit hover:bg-slate-100 text-sm lg:text-xl hover:cursor-pointer rounded-full"></i>
+                <div className="flex gap-2 self-start md:self-center">
+                  <i className="bx bx-forward-big p-2 bg-slate-50 hover:bg-slate-100 rounded-full text-lg md:text-xl"></i>
+                  <i className="bx bx-bookmarks p-2 bg-slate-50 hover:bg-slate-100 rounded-full text-lg md:text-xl"></i>
+                  <i className="bx bx-dots-horizontal-rounded p-2 bg-slate-50 hover:bg-slate-100 rounded-full text-lg md:text-xl"></i>
                 </div>
               </div>
 
-              <div
-                id="price"
-                className="flex flex-wrap items-center justify-between mt-4"
-              >
-                <p className="text-4xl md:text-5xl lg:text-6xl font-semibold text-blue-600">
+              <div className="flex flex-wrap justify-between items-center gap-4 mt-4">
+                <p className="text-3xl md:text-4xl lg:text-5xl font-semibold text-blue-600">
                   {house.price_display}
                 </p>
                 {house.monthly_installment_info && (
-                  <p className="text-sm md:text-md text-green-600 bg-green-100 px-3 py-1 rounded-full">
+                  <p className="text-sm md:text-base text-green-600 bg-green-100 px-3 py-1 rounded-full">
                     {house.monthly_installment_info}
                   </p>
                 )}
@@ -163,33 +163,26 @@ const PropertyPage = () => {
                 </p>
               )}
             </header>
-            {/* Konten Utama */}
+
             <main>
-              <section id="desc" className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-700 mb-3">
-                  Deskripsi
-                </h2>
-                <p className="text-slate-400 whitespace-pre-line leading-relaxed">
-                  {house.description}
-                </p>
-              </section>
+              <DescriptionSection description={house.description} />
 
               {house.nearby_points_of_interest_text && (
                 <section className="mt-8">
-                  <h2 className="text-2xl font-semibold text-gray-700 mb-3">
+                  <h2 className="text-xl md:text-2xl font-semibold text-gray-700 mb-3">
                     Properties available in the same area
                   </h2>
-                  <p className="text-slate-400">
+                  <p className="text-slate-500">
                     {house.nearby_points_of_interest_text}
                   </p>
                 </section>
               )}
 
-              <section id="add" className="mt-8 pt-6 border-t border-gray-200">
+              <section id="add" className="mt-10 pt-6 border-t border-gray-200">
                 <h2 className="text-xl font-semibold text-gray-700 mb-3">
                   Informasi Tambahan
                 </h2>
-                <div className="text-sm text-gray-500 space-y-1">
+                <div className="text-sm text-gray-500 space-y-2">
                   <p>
                     Diposting oleh:{" "}
                     <span className="font-medium text-gray-700">
@@ -232,122 +225,93 @@ const PropertyPage = () => {
             </main>
           </div>
 
-          <aside className="lg:w-[30%] w-full h-full lg:sticky lg:top-4 z-10">
+          <aside className="w-full lg:w-[30%] h-full lg:sticky lg:top-4 z-10 space-y-8">
+            {/* Fasilitas */}
             <section
               id="facilities"
-              className="w-full bg-slate-100 p-4 rounded-xl mb-8"
+              className="w-full bg-slate-100 p-4 rounded-xl"
             >
-              <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+              <h2 className="text-2xl font-semibold text-slate-700 mb-4">
                 Fasilitas
               </h2>
-              {house.facilities ? (
-                <ul className="list-disc list-inside space-y-1 text-gray-600">
+              {house.facilities?.length ? (
+                <ul className="space-y-1 text-slate-600">
                   {house.facilities.map((facility, index) => (
-                    <li key={index} className="list-none">
+                    <li key={index} className="list-disc list-inside">
                       {facility}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500">Tidak ada data fasilitas.</p>
+                <p className="text-slate-500">Tidak ada data fasilitas.</p>
               )}
             </section>
 
-            <section id="specs" className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+            {/* Spesifikasi */}
+            <section id="specs">
+              <h2 className="text-2xl font-semibold text-slate-700 mb-4">
                 Spesifikasi
               </h2>
-              <div className=" grid grid-cols-3   border rounded-xl text-gray-600">
-                <div className="p-4">
-                  <div className="text-xs">Tipe Properti: </div>
-                  <div className="text-xl"> {house.property_type}</div>
-                </div>
-                {house.specifications ? (
-                  <>
-                    <div className="p-4">
-                      <div className="text-xs">Kamar Tidur:</div>
-                      <div className="text-xl">
-                        {house.specifications.bedrooms}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-xs">Kamar Mandi:</div>
-                      <div className="text-xl">
-                        {house.specifications.bathrooms}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-xs">Luas Tanah:</div>
-                      <div className="text-xl">
-                        {house.specifications.land_area}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-xs">Luas Bangunan:</div>
-                      <div className="text-xl">
-                        {house.specifications.building_area}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-xs">Jumlah Lantai:</div>
-                      <div className="text-xl">
-                        {house.specifications.number_of_floors}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-xs">Kapasitas Carport:</div>
-                      <div className="text-xl">
-                        {house.specifications.carport_capacity} mobil
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-xs">Daya Listrik:</div>
-                      <div className="text-xl">
-                        {house.specifications.electricity_power}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="text-xs">Sertifikat:</div>
-                      <div className="text-xl">
-                        {house.specifications.certificate_type}
-                      </div>
-                    </div>
-                    {house.specifications.maid_bedrooms && (
-                      <div className="p-4">
-                        <div className="text-xs">Kamar Tidur ART:</div>
-                        <div className="text-xl">
-                          {house.specifications.maid_bedrooms}
-                        </div>
-                      </div>
-                    )}
-                    {house.specifications.maid_bathrooms && (
-                      <div className="p-4">
-                        <div className="text-xs">Kamar Mandi ART:</div>
-                        <div className="text-xl">
-                          {house.specifications.maid_bathrooms}
-                        </div>
-                      </div>
-                    )}
-                    <div className="p-4">
-                      <div className="text-xs">Kondisi Properti:</div>
-                      <div className="text-xl">
-                        {house.specifications.property_condition}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="col-span-3 p-4 text-gray-500">
-                    Tidak ada data spesifikasi.
+
+              <div className="grid grid-cols-2 border border-slate-300 rounded-2xl overflow-hidden text-slate-800">
+                {/* Kolom Kiri */}
+                <div className="divide-y divide-slate-100 border-r border-r-slate-300 p-4 flex flex-col gap-4">
+                  <div>
+                    <p className="text-sm text-slate-500">Tipe Properti</p>
+                    <p className="text-lg font-semibold">
+                      {house.property_type || "-"}
+                    </p>
                   </div>
-                )}
+                  <div>
+                    <p className="text-sm text-slate-500">Kamar Mandi</p>
+                    <p className="text-lg font-semibold">
+                      {house.specifications?.bathrooms || "-"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-500">Luas Bangunan</p>
+                    <p className="text-lg font-semibold">
+                      {house.specifications?.building_area || "-"} m²
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-500">Sertifikat</p>
+                    <p className="text-lg font-semibold">
+                      {house.specifications?.certificate_type || "-"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Kolom Kanan */}
+                <div className="divide-y divide-slate-100 p-4 flex flex-col gap-4">
+                  <div>
+                    <p className="text-sm text-slate-500">Kamar Tidur</p>
+                    <p className="text-lg font-semibold">
+                      {house.specifications?.bedrooms || "-"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-500">Luas Tanah</p>
+                    <p className="text-lg font-semibold">
+                      {house.specifications?.land_area || "-"} m²
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-500">Jumlah Lantai</p>
+                    <p className="text-lg font-semibold">
+                      {house.specifications?.number_of_floors || "-"}
+                    </p>
+                  </div>
+                </div>
               </div>
             </section>
 
-            <section id="cta" className=" pt-6 flex flex-col sm:flex-row gap-4">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg w-full sm:w-auto transition duration-150 ease-in-out hover:cursor-pointer">
+            {/* CTA */}
+            <section id="cta" className="flex flex-col sm:flex-row gap-4 pt-4">
+              <button className="bg-blue-600 hover:bg-blue-700 text-sm text-white font-bold py-3 px-6 rounded-lg w-full sm:w-auto transition hover:cursor-pointer duration-150 ease-in-out">
                 Hubungi Agen
               </button>
-              <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg w-full sm:w-auto transition duration-150 ease-in-out hover:cursor-pointer">
+              <button className="bg-slate-200 hover:bg-slate-300  text-sm text-slate-800 font-bold py-3 px-6 rounded-lg w-full sm:w-auto transition hover:cursor-pointer duration-150 ease-in-out">
                 Simpan Properti
               </button>
             </section>
@@ -357,13 +321,13 @@ const PropertyPage = () => {
         {/* Similar Properties Section */}
         <section
           id="similar-properties"
-          className="mt-12 pt-8 border-t border-gray-200"
+          className="mt-12 pt-8 border-t border-slate-200"
         >
           {/* Stats Info */}
           {recommendations.length > 0 && (
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-slate-500">
                   Memproses selama {computationTime.toFixed(2)} detik
                 </span>
                 <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
@@ -374,11 +338,11 @@ const PropertyPage = () => {
               <div className="flex flex-col gap-4">
                 <details>
                   <summary>
-                    <h2 className="text-3xl font-bold text-gray-800  flex items-end gap-2">
+                    <h2 className="text-3xl font-bold text-slate-800  flex items-end gap-2">
                       Rekomendasi Rumah Serupa
                     </h2>
                   </summary>
-                  <p className="text-gray-600">
+                  <p className="text-slate-600">
                     Properti yang dipilih khusus berdasarkan karakteristik
                     serupa yang mungkin Anda minati.
                   </p>
@@ -399,7 +363,7 @@ const PropertyPage = () => {
           {/* Loading State Khusus */}
           {similarLoading && (
             <div className="flex items-center justify-center py-12">
-              <div className="flex items-center space-x-3 text-gray-600">
+              <div className="flex items-center space-x-3 text-slate-600">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                 <span className="text-lg font-medium">
                   Mencari properti serupa...
@@ -410,13 +374,13 @@ const PropertyPage = () => {
 
           {/* Enhanced No Results State */}
           {!similarLoading && recommendations.length === 0 && !similarError && (
-            <div className="text-center py-16 bg-gray-50 rounded-xl">
+            <div className="text-center py-16 bg-slate-50 rounded-xl">
               <div className="max-w-md mx-auto">
                 <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                <h3 className="text-xl font-semibold text-slate-700 mb-2">
                   Belum Ada Properti Serupa
                 </h3>
-                <p className="text-gray-500 mb-6">
+                <p className="text-slate-500 mb-6">
                   Saat ini belum ada properti lain yang memiliki karakteristik
                   serupa dengan properti ini. Coba periksa kembali nanti atau
                   jelajahi properti lainnya.
