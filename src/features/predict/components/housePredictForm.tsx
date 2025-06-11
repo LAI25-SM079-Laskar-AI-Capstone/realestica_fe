@@ -147,7 +147,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
   return (
     <details
       id="house-predict"
-      className="max-w-5xl mx-auto w-full rounded-2xl border border-slate-200 hover:border-blue-300 transition duration-500 overflow-hidden"
+      className="w-full max-w-6xl mx-auto  rounded-2xl border border-slate-200 hover:border-blue-300 transition duration-500 overflow-hidden"
     >
       <summary className="bg-blue-700 hover:bg-blue-800 text-white flex flex-col md:flex-row justify-between gap-4 transition p-4 md:p-6 hover:cursor-pointer">
         <div className="flex flex-col">

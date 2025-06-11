@@ -93,58 +93,62 @@ const HousePages = () => {
           ) : isError ? (
             <p>Error: {error?.message}</p>
           ) : (
-            <>
-              <div>
-                <div className="flex justify-between items-baseline mb-4 gap-4">
-                  <h2 className="text-2xl font-bold ">House Properties</h2>
+            <div>
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-2 mb-4">
+                <h2 className="text-2xl font-bold">House Properties</h2>
 
-                  <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
-                    <span className="text-sm text-slate-400 ">
-                      Total: {meta.total} rumah
-                    </span>
+                <div className="flex flex-col sm:flex-row sm:items-center w-fit gap-2 sm:gap-4">
+                  <span className="text-sm text-slate-400">
+                    Total: {meta.total.toLocaleString()} rumah
+                  </span>
+
+                  <div className="flex gap-2">
                     <button
                       onClick={openModal}
-                      className="flex items-center gap-2 px-4 py-2 hover:cursor-pointer rounded-full hover:bg-gray-100"
+                      className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 transition-colors"
                     >
                       Filters
-                      <i className="bxr  bx-slider"></i>
+                      <i className="bx bx-slider"></i>
                     </button>
-
                     {hasActiveFilters && (
                       <button
                         onClick={handleClearFilters}
-                        className="flex items-center gap-2 px-4 py-2 hover:cursor-pointer rounded-full hover:bg-gray-100 text-red-500"
+                        className="flex items-center gap-2 px-4 py-2 rounded-full text-red-500 hover:bg-gray-100 transition-colors"
                       >
                         Clear
-                        <i className="bx bx-x"></i>
+                        <i className="bx bx-x" />
                       </button>
                     )}
                   </div>
                 </div>
-
-                <article
-                  className={`grid gap-3
-    grid-cols-1
-    md:grid-cols-2
-    lg:grid-cols-4
-    auto-rows-fr
-    min-h-[200px]
-  `}
-                >
-                  <PropertyList data={houses} />
-                </article>
-
-                {showPagination && (
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    hasPrev={meta.has_prev}
-                    hasNext={meta.has_next}
-                    onPageChange={handlePageChange}
-                  />
-                )}
               </div>
-            </>
+
+              {/* Grid of Properties */}
+              <article
+                className={`
+      grid gap-3
+      grid-cols-1
+      md:grid-cols-2
+      lg:grid-cols-4
+      auto-rows-fr
+      min-h-[200px]
+    `}
+              >
+                <PropertyList data={houses} />
+              </article>
+
+              {/* Pagination */}
+              {showPagination && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  hasPrev={meta.has_prev}
+                  hasNext={meta.has_next}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </div>
           )}
         </section>
       </div>

@@ -1,13 +1,14 @@
+import { useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import PropertyList from "../features/house/components/houseList";
+
 import useProperties from "../features/house/hooks/useProperties";
-import BackButton from "../shared/components/back-button";
-import Pagination from "../shared/components/Pagination";
+import PropertyList from "../features/house/components/houseList";
 import HouseSearch from "../features/house/components/houseSearch";
 import FilterModal, {
   type FilterModalHandle,
 } from "../features/house/components/filterModal";
-import { useRef } from "react";
+import BackButton from "../shared/components/back-button";
+import Pagination from "../shared/components/Pagination";
 
 const PAGE_LIMIT = 6;
 
@@ -16,37 +17,38 @@ const ResultPage = () => {
   const filterQuery = searchParams.get("query_search") || "";
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
+  // Modal ref & handler
   const modalRef = useRef<FilterModalHandle>(null);
   const openModal = () => modalRef.current?.open();
 
-  const handleClearFilters = () => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete("location_text");
-    newParams.delete("min_price");
-    newParams.delete("max_price");
-    newParams.delete("sort");
-    newParams.set("page", "1"); // optional: reset to page 1
-    setSearchParams(newParams);
-  };
-
+  // Filter detection
   const hasActiveFilters =
     searchParams.has("location_text") ||
     searchParams.has("min_price") ||
     searchParams.has("max_price") ||
     searchParams.has("sort");
 
+  // Clear filters
+  const handleClearFilters = () => {
+    const newParams = new URLSearchParams(searchParams);
+    ["location_text", "min_price", "max_price", "sort"].forEach((key) =>
+      newParams.delete(key)
+    );
+    newParams.set("page", "1"); // Reset to page 1
+    setSearchParams(newParams);
+  };
+
+  // Apply filters from modal
   const handleApply = (filters: Record<string, string | undefined>) => {
     const newParams = new URLSearchParams(searchParams);
     Object.entries(filters).forEach(([key, value]) => {
-      if (value) {
-        newParams.set(key, value);
-      } else {
-        newParams.delete(key);
-      }
+      if (value) newParams.set(key, value);
+      else newParams.delete(key);
     });
     setSearchParams(newParams);
   };
 
+  // Page navigation
   const handlePageChange = (newPage: number) => {
     if (newPage < 1) return;
     setSearchParams((prev) => {
@@ -56,6 +58,7 @@ const ResultPage = () => {
     });
   };
 
+  // Fetching properties
   const { houses, meta, isLoading, isError, error } = useProperties({
     filter: filterQuery,
     currentPage,
@@ -65,36 +68,56 @@ const ResultPage = () => {
   const totalPages = Math.ceil(meta.total / PAGE_LIMIT);
 
   return (
-    <main className="min-h-screen max-w-[1100px] mx-auto p-4 py-12">
+    <main className="min-h-screen max-w-[1100px] mx-auto px-4 py-12">
       <BackButton />
-
       <HouseSearch />
 
       {isLoading ? (
         <p>Loading...</p>
       ) : isError ? (
-        <p>Error: {error?.message}</p>
+        <p className="text-red-500">Error: {error?.message}</p>
+      ) : meta.total === 0 ? (
+        <div className="text-center mt-12 space-y-4">
+          <h2 className="text-xl font-semibold text-gray-800">
+            Kami tidak menemukan hasil yang sesuai untuk keyword "
+            {filterQuery || "your search"}"
+          </h2>
+          <p className="text-sm text-gray-500">
+            Coba sesuaikan filter atau kata kunci pencarian Anda untuk melihat
+            lebih banyak hasil.
+          </p>
+
+          {hasActiveFilters && (
+            <button
+              onClick={handleClearFilters}
+              className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full text-red-500 hover:bg-gray-100 transition"
+            >
+              Clear Filters
+              <i className="bx bx-x"></i>
+            </button>
+          )}
+        </div>
       ) : (
         <>
-          <div className="flex flex-col justify-between items-center sm:flex-row gap-4 sm:items-center">
-            <h2 className="text-3xl font-bold mb-6">
-              {meta.total} Results Found for "{filterQuery}"
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold">
+              {meta.total.toLocaleString()} Results Found for "{filterQuery}"
             </h2>
-            <div className="filter-wrap flex gap-4">
+
+            <div className="flex flex-wrap gap-2 sm:gap-4">
               <button
                 onClick={openModal}
-                className="flex items-center gap-2 px-4 py-2 hover:cursor-pointer rounded-full hover:bg-gray-100"
+                className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 transition"
               >
-                Filters
-                <i className="bxr  bx-slider"></i>
+                Filters <i className="bx bx-slider"></i>
               </button>
+
               {hasActiveFilters && (
                 <button
                   onClick={handleClearFilters}
-                  className="flex items-center gap-2 px-4 py-2 hover:cursor-pointer rounded-full hover:bg-gray-100 text-red-500"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full text-red-500 hover:bg-gray-100 transition"
                 >
-                  Clear
-                  <i className="bx bx-x"></i>
+                  Clear <i className="bx bx-x"></i>
                 </button>
               )}
             </div>
@@ -103,6 +126,7 @@ const ResultPage = () => {
           <article className="grid grid-cols-1 gap-4">
             <PropertyList data={houses} axis="horizontal" />
           </article>
+
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
@@ -112,6 +136,8 @@ const ResultPage = () => {
           />
         </>
       )}
+
+      {/* Filter Modal */}
       <FilterModal
         ref={modalRef}
         initialValues={{
