@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import BackButton from "../shared/components/back-button";
 
 import { useRecommendation } from "../features/recommendation/hooks/useRecommendation";
-import PropertyRecommendations from "../features/recommendation/components/PropertyRecommendation";
+import PropertyRecommendations from "../features/recommendation/components/propertyRecommendation";
 import type { SimilarPropertiesRequest } from "../features/recommendation/types";
 
 import type { Property } from "../features/house/types/property";

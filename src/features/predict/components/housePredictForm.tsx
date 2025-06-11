@@ -4,7 +4,7 @@ import { facilities, pointOfInterest } from "../utils/constant";
 import { useRecommendation } from "../../recommendation/hooks/useRecommendation";
 import type { BasicFormData, PredictResponseData } from "../types/predict";
 import type { RecommendationCriteria } from "../../recommendation/types";
-import PropertyRecommendations from "../../recommendation/components/PropertyRecommendation";
+import PropertyRecommendations from "../../recommendation/components/propertyRecommendation";
 
 interface HousePredictFormProps {
   onSubmit: (
