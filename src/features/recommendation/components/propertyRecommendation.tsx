@@ -1,10 +1,29 @@
 import React from "react";
-import type { Property } from "../types";
+import type { RecommendedProperty } from "../types";
 import { images } from "../../predict/utils/constant";
 import { useNavigate } from "react-router-dom";
+// import type { Property } from "../../house/types/property";
+
+// function normalizeToProperty(rec: RecommendedProperty): Property {
+//   return {
+//     ...rec,
+//     monthly_installment_info: rec.monthly_installment_info ?? '',
+//     estimated_savings: rec.estimated_savings ?? '',
+//     facilities: rec.facilities ?? [],
+//     nearby_points_of_interest_text: '', // opsional, atau generate dari rec.nearby_points_of_interest
+//     createdAt: new Date(rec.createdAt),
+//     updatedAt: new Date(rec.updatedAt),
+//     specifications: {
+//       ...rec.specifications,
+//       carport_capacity: typeof rec.specifications.carport_capacity === 'string' ? parseInt(rec.specifications.carport_capacity, 10) || undefined : rec.specifications.carport_capacity,
+//       maid_bathrooms: undefined,
+//       maid_bedrooms: undefined,
+//     },
+//   };
+// }
 
 interface PropertyRecommendationsProps {
-  recommendations: Property[];
+  recommendations: RecommendedProperty[];
   loading: boolean;
   error: string | null;
   showRecommendations: boolean;

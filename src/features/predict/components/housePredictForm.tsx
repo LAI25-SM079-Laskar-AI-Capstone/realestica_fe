@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import PredictionResultSkeleton from "./predictionResultSkeleton";
 import { facilities, pointOfInterest } from "../utils/constant";
 import { useRecommendation } from "../../recommendation/hooks/useRecommendation";
-import PropertyRecommendations from "../../recommendation/components/propertyRecommendation";
 import type { BasicFormData, PredictResponseData } from "../types/predict";
 import type { RecommendationCriteria } from "../../recommendation/types";
+import PropertyRecommendations from "../../recommendation/components/PropertyRecommendation";
 
 interface HousePredictFormProps {
   onSubmit: (
@@ -149,21 +149,19 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
       id="house-predict"
       className=" rounded-2xl border border-slate-200 hover:border-blue-300 w-full mx-auto   transition duration-500 overflow-hidden"
     >
-      <summary className="bg-blue-700 hover:bg-blue-800 flex justify-between items-baseline-last transition  p-6 hover:cursor-pointer">
+      <summary className="bg-blue-700 hover:bg-blue-800 text-white flex justify-between items-baseline-last transition  p-6 hover:cursor-pointer">
         <div className="flex flex-col ">
           <div className="flex  items-center gap-3 mb-4">
-            <i className="bxr  bx-sparkles text-2xl text-white"></i>
-            <h2 className="text-2xl font-bold text-white">
-              Prediksi Harga Properti
-            </h2>
+            <i className="bxr  bx-sparkles text-2xl "></i>
+            <h2 className="text-2xl font-bold ">Prediksi Harga Properti</h2>
           </div>
-          <p className="max-w-[50ch] text-white text-sm">
+          <p className="max-w-[50ch]  text-sm">
             Penasaran berapa nilai properti impian Anda? Gunakan fitur prediksi
             kami untuk mendapatkan perkiraan harga akurat berdasarkan data
             terbaru.
           </p>
         </div>
-        <i className="bxr  bxs-arrow-down-right-stroke-square text-4xl text-white"></i>
+        <i className="bxr  bxs-arrow-down-right-stroke-square text-4xl "></i>
       </summary>
 
       <form
@@ -197,7 +195,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
             <div>
               <label
                 htmlFor="s_kamar_mandi"
-                className="block text-sm font-medium text-white mb-1"
+                className="block text-sm font-medium  mb-1"
               >
                 Kamar Mandi
               </label>
@@ -216,7 +214,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
             <div>
               <label
                 htmlFor="s_luas_bangunan"
-                className="block text-sm font-medium text-white mb-1"
+                className="block text-sm font-medium  mb-1"
               >
                 Luas Bangunan (m²)
               </label>
@@ -235,7 +233,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
             <div>
               <label
                 htmlFor="s_luas_tanah"
-                className="block text-sm font-medium text-white mb-1"
+                className="block text-sm font-medium  mb-1"
               >
                 Luas Tanah (m²)
               </label>
@@ -257,7 +255,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
             <div>
               <label
                 htmlFor="kabupaten"
-                className="block text-sm font-medium text-white mb-1"
+                className="block text-sm font-medium  mb-1"
               >
                 Kabupaten
               </label>
@@ -280,7 +278,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
             <div>
               <label
                 htmlFor="s_sertifikat"
-                className="block text-sm font-medium text-white mb-1"
+                className="block text-sm font-medium  mb-1"
               >
                 Sertifikat
               </label>
@@ -388,8 +386,8 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
             disabled={isSubmitting || showLoading}
             className={`w-fit py-3 px-6  rounded-full font-medium transition-colors hover:cursor-pointer ${
               isSubmitting || showLoading
-                ? "bg-gray-400 cursor-not-allowed text-white"
-                : "bg-blue-600 hover:bg-blue-700 text-white"
+                ? "bg-gray-400 cursor-not-allowed "
+                : "bg-blue-600 hover:bg-blue-700 "
             }`}
           >
             {isSubmitting || showLoading ? (

@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
 import { getPropertyById } from '../api/recommendation';
-import type { Property } from '../types';
+import type { RecommendedProperty } from '../types';
 
 export function useProperty() {
-  const [property, setProperty] = useState<Property | null>(null);
+  const [property, setProperty] = useState<RecommendedProperty | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

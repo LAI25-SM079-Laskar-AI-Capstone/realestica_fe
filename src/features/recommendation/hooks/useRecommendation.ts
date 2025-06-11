@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
 import { getRecommendationProperty, getSimilarProperties } from '../api/recommendation';
-import type { Property, RecommendationByCriteriaRequest, SimilarPropertiesRequest } from '../types';
+import type { RecommendedProperty, RecommendationByCriteriaRequest, SimilarPropertiesRequest } from '../types';
 
 interface UseRecommendationState {
-  recommendations: Property[];
+  recommendations: RecommendedProperty[];
   loading: boolean;
   error: string | null;
   totalFound: number;

@@ -50,8 +50,6 @@ const HousePages = () => {
         </section>
 
         <section id="houses-section">
-          <h2 className="text-2xl font-bold mb-4">Properties</h2>
-
           {isLoading ? (
             <p>Loading...</p>
           ) : isError ? (
@@ -59,7 +57,9 @@ const HousePages = () => {
           ) : (
             <>
               <div>
-                <div className="flex justify-end items-baseline mb-4 gap-4">
+                <div className="flex justify-between items-baseline mb-4 gap-4">
+                  <h2 className="text-2xl font-bold ">House Properties</h2>
+
                   <span className="text-lg text-slate-400 font-semibold">
                     Total: {meta.total}
                   </span>

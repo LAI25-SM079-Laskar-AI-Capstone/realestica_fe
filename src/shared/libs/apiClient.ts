@@ -4,13 +4,14 @@ interface ApiErrorResponse {
 }
 
 export class ApiError extends Error {
-  constructor(
-    public message: string,
-    public statusCode: number,
-    public data: ApiErrorResponse
-  ) {
+  public statusCode: number;
+  public data: ApiErrorResponse;
+
+  constructor(message: string, statusCode: number, data: ApiErrorResponse) {
     super(message);
-    this.name = "ApiError";
+    this.name = 'ApiError';
+    this.statusCode = statusCode;
+    this.data = data;
   }
 }
 
@@ -26,21 +27,14 @@ export class ApiClient {
   constructor(baseUrl: string, defaultHeaders: Record<string, string> = {}) {
     this.baseUrl = baseUrl;
     this.defaultHeaders = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...defaultHeaders,
     };
   }
 
-  private async request<T>(
-    method: string,
-    url: string,
-    data?: unknown,
-    options: RequestOptions = {}
-  ): Promise<T> {
+  private async request<T>(method: string, url: string, data?: unknown, options: RequestOptions = {}): Promise<T> {
     try {
-      const queryParams = options.params
-        ? "?" + new URLSearchParams(options.params).toString()
-        : "";
+      const queryParams = options.params ? '?' + new URLSearchParams(options.params).toString() : '';
 
       const response = await fetch(this.baseUrl + url + queryParams, {
         method,
@@ -55,15 +49,11 @@ export class ApiClient {
 
       if (!response.ok) {
         const errorResponse: ApiErrorResponse = {
-          message: responseData?.message || "An error occurred",
+          message: responseData?.message || 'An error occurred',
           ...responseData,
         };
 
-        throw new ApiError(
-          errorResponse.message,
-          response.status,
-          errorResponse
-        );
+        throw new ApiError(errorResponse.message, response.status, errorResponse);
       }
 
       return responseData;
@@ -73,8 +63,7 @@ export class ApiClient {
       }
 
       const errorResponse: ApiErrorResponse = {
-        message:
-          error instanceof Error ? error.message : "Unknown error occurred",
+        message: error instanceof Error ? error.message : 'Unknown error occurred',
       };
 
       throw new ApiError(errorResponse.message, 500, errorResponse);
@@ -82,34 +71,22 @@ export class ApiClient {
   }
 
   async get<T>(url: string, options?: RequestOptions): Promise<T> {
-    return this.request<T>("GET", url, undefined, options);
+    return this.request<T>('GET', url, undefined, options);
   }
 
-  async post<T>(
-    url: string,
-    data: unknown,
-    options?: RequestOptions
-  ): Promise<T> {
-    return this.request<T>("POST", url, data, options);
+  async post<T>(url: string, data: unknown, options?: RequestOptions): Promise<T> {
+    return this.request<T>('POST', url, data, options);
   }
 
-  async put<T>(
-    url: string,
-    data: unknown,
-    options?: RequestOptions
-  ): Promise<T> {
-    return this.request<T>("PUT", url, data, options);
+  async put<T>(url: string, data: unknown, options?: RequestOptions): Promise<T> {
+    return this.request<T>('PUT', url, data, options);
   }
 
-  async patch<T>(
-    url: string,
-    data: unknown,
-    options?: RequestOptions
-  ): Promise<T> {
-    return this.request<T>("PATCH", url, data, options);
+  async patch<T>(url: string, data: unknown, options?: RequestOptions): Promise<T> {
+    return this.request<T>('PATCH', url, data, options);
   }
 
   async delete<T>(url: string, options?: RequestOptions): Promise<T> {
-    return this.request<T>("DELETE", url, undefined, options);
+    return this.request<T>('DELETE', url, undefined, options);
   }
 }

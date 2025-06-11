@@ -22,7 +22,7 @@ export interface Property {
   };
   nearby_points_of_interest_text?: string;
   posted_by: string;
-  property_type: "House" | "Apartment" | "Other";
+  property_type: 'House' | 'Apartment' | 'Other';
   source_url: string;
   createdAt: Date;
   updatedAt: Date;
