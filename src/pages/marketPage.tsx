@@ -1,14 +1,11 @@
-// import Navbar from "../shared/components/navbar";
-
 // import useMarkets from "../features/market-intelligence/hooks/useMarket";
-import ComingSoonPage from './commingSoonPage';
+
+import ComingSoonPage from "./commingSoonPage";
 const MarketPage = () => {
   // const { markets: Recommended } = useMarkets({});
 
   return (
-    <main className="max full p-4 gap-12  ">
-      {/* <Navbar /> */}
-
+    <main className="min-h-screen full p-4 gap-12  ">
       <ComingSoonPage />
     </main>
   );

@@ -1,12 +1,18 @@
-import { useRef } from 'react';
-import FilterModal, { type FilterModalHandle } from '../features/house/components/filterModal';
-import PropertyList from '../features/house/components/houseList';
-import HouseSearch from '../features/house/components/houseSearch';
-import useProperties from '../features/house/hooks/useProperties';
-import HousePredict from '../features/predict/components/housePredict';
-import { motion, AnimatePresence } from 'framer-motion';
-import Pagination from '../shared/components/Pagination';
-import { useSearchParams } from 'react-router-dom';
+import { useRef } from "react";
+import { useSearchParams } from "react-router-dom";
+
+import { motion, AnimatePresence } from "framer-motion";
+
+import FilterModal, {
+  type FilterModalHandle,
+} from "../features/house/components/filterModal";
+import PropertyList from "../features/house/components/houseList";
+import HouseSearch from "../features/house/components/houseSearch";
+import useProperties from "../features/house/hooks/useProperties";
+
+import HousePredict from "../features/predict/components/housePredict";
+
+import Pagination from "../shared/components/Pagination";
 
 const PAGE_LIMIT = 12;
 
@@ -27,34 +33,38 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: 'spring',
+      type: "spring",
       damping: 12,
       stiffness: 100,
     },
   },
-};
+} as const;
 
 const HousePages = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = parseInt(searchParams.get('page') || '1', 10);
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
   const handleClearFilters = () => {
     const newParams = new URLSearchParams(searchParams);
-    newParams.delete('location_text');
-    newParams.delete('min_price');
-    newParams.delete('max_price');
-    newParams.delete('sort');
-    newParams.set('page', '1');
+    newParams.delete("location_text");
+    newParams.delete("min_price");
+    newParams.delete("max_price");
+    newParams.delete("sort");
+    newParams.set("page", "1");
     setSearchParams(newParams);
   };
 
-  const hasActiveFilters = searchParams.has('location_text') || searchParams.has('min_price') || searchParams.has('max_price') || searchParams.has('sort');
+  const hasActiveFilters =
+    searchParams.has("location_text") ||
+    searchParams.has("min_price") ||
+    searchParams.has("max_price") ||
+    searchParams.has("sort");
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1) return;
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
-      next.set('page', newPage.toString());
+      next.set("page", newPage.toString());
       return next;
     });
   };
@@ -83,19 +93,24 @@ const HousePages = () => {
   const showPagination = totalPages > 1;
 
   return (
-    <motion.main className="w-full py-4 pt-0 gap-12" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
+    <motion.main
+      className="w-full py-4 pt-0 gap-12"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       {/* Jumbotron */}
       <div
-        className="w-full relative overflow-hidden bg-gray-900 py-24"
+        className="w-full relative overflow-hidden  py-24 "
         style={{
           backgroundImage: "url('/bg.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'bottom',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
+          backgroundSize: "cover",
+          backgroundPosition: "bottom",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
         }}
       >
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/45  backdrop-blur-xs"></div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -104,13 +119,13 @@ const HousePages = () => {
           className="max-w-[1100px] mx-auto relative z-10 flex flex-col items-center justify-center text-center gap-4 px-4 sm:px-6 lg:px-8"
         >
           <motion.h1
-            className="font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight text-white"
+            className="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-7xl tracking-tight lg:-tracking-wider text-white"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.8,
               delay: 0.2,
-              type: 'spring',
+              type: "spring",
               stiffness: 100,
             }}
           >
@@ -118,17 +133,19 @@ const HousePages = () => {
           </motion.h1>
 
           <motion.p
-            className="max-w-prose text-sm sm:text-base md:text-lg text-gray-200"
+            className="max-w-prose text-sm sm:text-base md:text-lg text-white"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.8,
               delay: 0.4,
-              type: 'spring',
+              type: "spring",
               stiffness: 100,
             }}
           >
-            Rumah strategis, informasi lengkap, keputusan lebih cepat. Telusuri properti rumah di Jakarta dengan pengalaman pencarian yang mudah dan cerdas.
+            Rumah strategis, informasi lengkap, keputusan lebih cepat. Telusuri
+            properti rumah di Jakarta dengan pengalaman pencarian yang mudah dan
+            cerdas.
           </motion.p>
 
           <motion.div
@@ -137,7 +154,7 @@ const HousePages = () => {
             transition={{
               duration: 0.8,
               delay: 0.6,
-              type: 'spring',
+              type: "spring",
               stiffness: 100,
             }}
             whileHover={{ scale: 1.01 }}
@@ -151,7 +168,7 @@ const HousePages = () => {
         <motion.section
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{
             duration: 0.8,
             delay: 0.2,
@@ -172,14 +189,20 @@ const HousePages = () => {
           }}
         >
           {isLoading ? (
-            <motion.div className="flex justify-center items-center h-64" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+            <motion.div
+              className="flex justify-center items-center h-64"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
               <motion.div
                 className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"
                 animate={{ rotate: 360 }}
                 transition={{
                   duration: 1,
                   repeat: Infinity,
-                  ease: 'linear',
+                  ease: "linear",
                 }}
               />
             </motion.div>
@@ -190,7 +213,7 @@ const HousePages = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{
                 duration: 0.5,
-                ease: 'backOut',
+                ease: "backOut",
               }}
             >
               Error: {error?.message}
@@ -204,10 +227,13 @@ const HousePages = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.6,
-                  ease: 'easeOut',
+                  ease: "easeOut",
                 }}
               >
-                <motion.h2 className="text-2xl md:text-3xl font-bold" variants={itemVariants}>
+                <motion.h2
+                  className="text-2xl md:text-3xl font-bold"
+                  variants={itemVariants}
+                >
                   House Properties
                 </motion.h2>
 
@@ -259,7 +285,7 @@ const HousePages = () => {
                             opacity: 1,
                             x: 0,
                             transition: {
-                              type: 'spring',
+                              type: "spring",
                               stiffness: 300,
                               damping: 15,
                             },
@@ -288,7 +314,12 @@ const HousePages = () => {
               </motion.div>
 
               {/* Grid of Properties */}
-              <motion.article className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-fr min-h-[200px]" variants={containerVariants} initial="hidden" animate="show">
+              <motion.article
+                className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-fr min-h-[200px]"
+                variants={containerVariants}
+                initial="hidden"
+                animate="show"
+              >
                 <PropertyList data={houses} />
               </motion.article>
 
@@ -302,12 +333,18 @@ const HousePages = () => {
                     y: 0,
                     transition: {
                       duration: 0.6,
-                      ease: 'easeOut',
+                      ease: "easeOut",
                       delay: 0.2,
                     },
                   }}
                 >
-                  <Pagination currentPage={currentPage} totalPages={totalPages} hasPrev={meta.has_prev} hasNext={meta.has_next} onPageChange={handlePageChange} />
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    hasPrev={meta.has_prev}
+                    hasNext={meta.has_next}
+                    onPageChange={handlePageChange}
+                  />
                 </motion.div>
               )}
             </div>
@@ -318,10 +355,10 @@ const HousePages = () => {
       <FilterModal
         ref={modalRef}
         initialValues={{
-          location_text: searchParams.get('location_text') || '',
-          min_price: searchParams.get('min_price') || '',
-          max_price: searchParams.get('max_price') || '',
-          sort: (searchParams.get('sort') as 'asc' | 'desc') || undefined,
+          location_text: searchParams.get("location_text") || "",
+          min_price: searchParams.get("min_price") || "",
+          max_price: searchParams.get("max_price") || "",
+          sort: (searchParams.get("sort") as "asc" | "desc") || undefined,
         }}
         onApply={handleApply}
       />

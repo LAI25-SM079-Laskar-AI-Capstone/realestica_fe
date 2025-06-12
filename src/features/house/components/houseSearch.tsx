@@ -15,14 +15,14 @@ const HouseSearch = () => {
   return (
     <form
       onSubmit={handleSearchSubmit}
-      className="w-full max-w-md flex items-center gap-0 overflow-hidden rounded-full border border-slate-200 mb-8"
+      className="w-full max-w-md flex items-center gap-0 overflow-hidden rounded-full border border-slate-300/50 mb-8"
     >
       <input
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search properties..."
-        className="flex-1 px-6 py-2 text-sm sm:text-base focus:outline-none"
+        className="flex-1 px-6 py-2 text-sm sm:text-base text-white focus:outline-none"
       />
       <button
         type="submit"
