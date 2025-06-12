@@ -14,17 +14,32 @@ const Navbar = () => {
       {/* Logo Centered for Mobile (non-sticky) */}
       <div className="md:hidden flex justify-center py-4">
         <Link
-          to="/"
+          to="/home"
           className="bg-white pt-2 tan-pearl rounded-full  text-slate-600 font-bold text-sm"
         >
-          Realestica
+          <img
+            src="realestica-black-nobg.png"
+            alt="Logo"
+            width={28}
+            height={28}
+            className="transition-all hover:opacity-75 "
+          />
         </Link>
       </div>
 
       {/* Top Navbar for Desktop */}
       <div className="hidden md:flex justify-between items-center px-6 md:px-20 py-4 bg-white/50 backdrop-blur-md border-b border-slate-100">
-        <Link to="/" className="tan-pearl text-slate-500 font-bold text-base">
-          Realestica
+        <Link
+          to="/home"
+          className="tan-pearl text-slate-500 font-bold text-base"
+        >
+          <img
+            src="realestica-black-nobg.png"
+            alt="Logo"
+            width={28}
+            height={28}
+            className="transition-all hover:opacity-75 "
+          />
         </Link>
 
         <ul className="flex items-center gap-6">

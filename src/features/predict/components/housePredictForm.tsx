@@ -30,6 +30,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
     s_luas_tanah: "72",
     kabupaten: "jakarta barat",
     s_sertifikat: "shm",
+    s_jumlah_lantai: "1",
   });
 
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
@@ -182,6 +183,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
                 ["s_kamar_mandi", "Kamar Mandi", "1"],
                 ["s_luas_bangunan", "Luas Bangunan (m²)", "50"],
                 ["s_luas_tanah", "Luas Tanah (m²)", "72"],
+                ["s_jumlah_lantai", "Jumlah Lantai", "2"],
               ] as [keyof BasicFormData, string, string][]
             ).map(([id, label, placeholder]) => (
               <div key={id}>

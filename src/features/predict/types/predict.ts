@@ -5,6 +5,7 @@ export interface BasicFormData {
   s_luas_tanah: string;
   kabupaten: string;
   s_sertifikat: string;
+  s_jumlah_lantai: string;
 }
 
 export interface PredictRequestData {

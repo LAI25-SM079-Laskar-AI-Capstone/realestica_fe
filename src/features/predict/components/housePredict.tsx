@@ -23,13 +23,13 @@ const HousePredict: React.FC = () => {
     const predictData: PredictRequestData = {
       ...facilityMapping,
       ...poiMapping,
-      s_jumlah_lantai: "1",
       s_kamar_mandi: formData.s_kamar_mandi,
       s_kamar_tidur: formData.s_kamar_tidur,
       s_luas_bangunan: formData.s_luas_bangunan,
       s_luas_tanah: formData.s_luas_tanah,
       kabupaten: formData.kabupaten,
       s_sertifikat: formData.s_sertifikat,
+      s_jumlah_lantai: formData.s_jumlah_lantai,
     } as PredictRequestData;
 
     predictPrice(predictData, {

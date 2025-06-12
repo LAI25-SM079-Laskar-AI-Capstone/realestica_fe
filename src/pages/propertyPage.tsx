@@ -344,7 +344,7 @@ const PropertyPage = () => {
                   </summary>
                   <p className="text-slate-600">
                     Properti yang dipilih khusus berdasarkan karakteristik
-                    serupa yang mungkin Anda minati.
+                    serupa menurut fitur.
                   </p>
                 </details>
                 {/* Property Recommendations Component */}
