@@ -393,7 +393,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
             >
               <i className="bx bxs-sparkles text-4xl text-blue-600"></i>
               <section className="flex-1 relative overflow-hidden">
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 mb-2">
                   <h4 className="text-lg font-semibold text-gray-800">
                     Estimasi Properti Anda
                   </h4>
@@ -432,7 +432,7 @@ const HousePredictForm: React.FC<HousePredictFormProps> = ({
             >
               <i className="bx bxs-sparkles text-4xl text-blue-600"></i>
               <section className="flex-1 bg-white overflow-hidden">
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 mb-2">
                   <h4 className="text-lg font-semibold text-gray-800">
                     Lihat properti serupa yang tersedia
                   </h4>
