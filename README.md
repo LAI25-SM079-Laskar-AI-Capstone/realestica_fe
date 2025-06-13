@@ -1,5 +1,3 @@
-
-
 # 🎨 Frontend Realestica
 
 **Bagian dari Proyek Realestica**

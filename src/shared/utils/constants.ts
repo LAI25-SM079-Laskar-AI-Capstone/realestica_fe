@@ -26,11 +26,11 @@ export const additionalRoutes: AppRoute[] = [
     path: "/about",
     iconClassName: "bxr  bx-community",
   },
-  {
-    name: "Hubungi Kami",
-    path: "/contact",
-    iconClassName: "bxr  bx-contact-book",
-  },
+  // {
+  //   name: "Hubungi Kami",
+  //   path: "/contact",
+  //   iconClassName: "bxr  bx-contact-book",
+  // },
 ];
 
 export const allRoutes = [...featureRoutes, ...additionalRoutes];
