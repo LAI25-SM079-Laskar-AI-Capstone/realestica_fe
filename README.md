@@ -1,54 +1,102 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# 🎨 Frontend Realestica
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Bagian dari Proyek Realestica**
+Solusi Cerdas untuk Prediksi & Rekomendasi Properti di Jakarta
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📚 Daftar Isi
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+* [📁 Struktur Folder](#-struktur-folder)
+* [🛠️ Teknologi Utama](#️-teknologi-utama)
+* [🚀 Cara Menjalankan](#-cara-menjalankan)
+* [📦 Fitur Utama](#-fitur-utama)
+* [🔗 Link Terkait](#-link-terkait)
+
+---
+
+## 📁 Struktur Folder
+
+```bash
+realestica-frontend/
+├── public/           # File statis
+├── src/
+│   ├── assets/       # Gambar dan icon
+│   ├── components/   # Komponen UI reusable
+│   ├── features/     # Halaman dan fitur utama
+│   ├── hooks/        # Custom hooks (React Query, dll)
+│   ├── routes/       # Routing aplikasi
+│   ├── services/     # API client (axios)
+│   ├── utils/        # Helper dan konstanta
+│   └── App.tsx       # Root komponen
+├── index.html
+├── package.json
+├── tailwind.config.js
+└── vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Teknologi Utama
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+* ⚛️ React + TypeScript
+* ⚡ Vite
+* 💅 TailwindCSS
+* 📦 TanStack React Query
+* 🌍 React Router
+* 💬 Headless UI + HeroIcons
+
+---
+
+## 🚀 Cara Menjalankan
+
+1. **Clone repo:**
+
+   ```bash
+   git clone https://github.com/namarepo/realestica-frontend.git
+   cd realestica-frontend
+   ```
+
+2. **Install dependency:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Jalankan secara lokal:**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Build untuk produksi:**
+
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 📦 Fitur Utama
+
+* 🔍 Cari rumah berdasarkan lokasi, harga, dan fasilitas
+* 📊 Prediksi harga properti berbasis AI
+* 🧠 Rekomendasi rumah mirip secara otomatis
+* 📱 Desain responsive dan mobile-first
+* 📌 Filter interaktif dalam modal
+* 🧾 Detail properti lengkap (galeri, lokasi, lingkungan sekitar)
+
+---
+
+## 🔗 Link Terkait
+
+* 🌐 Website: [https://realestica.netlify.app](https://realestica.netlify.app)
+* 📦 Backend API: [API Docs](https://realesticebe-production.up.railway.app/docs)
+* 🤖 Repositori Data & ML:
+
+  * [Scraper](https://github.com/MuhammadRizki8/house-property-data-scraper)
+  * [Recommendation System](https://realestica-recommendation-system-production.up.railway.app)
+
+---

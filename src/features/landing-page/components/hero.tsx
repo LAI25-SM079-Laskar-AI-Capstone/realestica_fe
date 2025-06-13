@@ -3,8 +3,11 @@ export default function Hero() {
     <section className="py-12 sm:py-16">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
-          <a href="/" className="mb-6 text-sm font-medium  hover:underline">
-            Realestica · AI Cerdas untuk Harga & Rekomendasi Rumah Jakarta
+          <a href="/" className="flex items-center mb-6">
+            <span className="text-sm font-medium hover:underline">
+              Realestica · AI Cerdas untuk Harga & Rekomendasi Rumah Jakarta
+            </span>
+            <i className="bxr bx-arrow-down-right-stroke text-2xl md:text-3xl "></i>
           </a>
 
           <h1 className="mb-4 text-3xl font-semibold leading-tight sm:text-5xl lg:text-6xl tracking-tight lg:-tracking-wider">

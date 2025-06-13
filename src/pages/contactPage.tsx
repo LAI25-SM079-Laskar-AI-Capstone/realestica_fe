@@ -1,12 +1,8 @@
-// import Navbar from "../shared/components/navbar";
-
-import ComingSoonPage from './commingSoonPage';
+import ComingSoonPage from "./commingSoonPage";
 
 const ContactPage = () => {
   return (
-    <main className="max full p-4 gap-12  ">
-      {/* <Navbar /> */}
-
+    <main className="min-h-screen p-4 gap-12  ">
       <ComingSoonPage />
     </main>
   );

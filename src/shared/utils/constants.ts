@@ -22,14 +22,14 @@ export const featureRoutes: AppRoute[] = [
 
 export const additionalRoutes: AppRoute[] = [
   {
-    name: "tentang kami",
+    name: "Tentang Kami",
     path: "/about",
-    iconClassName: "bx  bx-community",
+    iconClassName: "bxr  bx-community",
   },
   {
-    name: "hubungi kami",
+    name: "Hubungi Kami",
     path: "/contact",
-    iconClassName: "bx  bx-contact-book",
+    iconClassName: "bxr  bx-contact-book",
   },
 ];
 

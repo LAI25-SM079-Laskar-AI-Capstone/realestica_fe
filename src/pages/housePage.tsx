@@ -102,15 +102,15 @@ const HousePages = () => {
       {/* Jumbotron */}
       <div
         className="w-full relative overflow-hidden  py-24 "
-        style={{
-          backgroundImage: "url('/bg.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "bottom",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-        }}
+        // style={{
+        //   backgroundImage: "url('/bg.png')",
+        //   backgroundSize: "cover",
+        //   backgroundPosition: "bottom",
+        //   backgroundRepeat: "no-repeat",
+        //   backgroundAttachment: "fixed",
+        // }}
       >
-        <div className="absolute inset-0 bg-black/45  backdrop-blur-xs"></div>
+        {/* <div className="absolute inset-0 bg-black/45  backdrop-blur-xs"></div> */}
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -119,7 +119,7 @@ const HousePages = () => {
           className="max-w-[1100px] mx-auto relative z-10 flex flex-col items-center justify-center text-center gap-4 px-4 sm:px-6 lg:px-8"
         >
           <motion.h1
-            className="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-7xl tracking-tight lg:-tracking-wider text-white"
+            className="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-7xl tracking-tight lg:-tracking-wider "
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -133,7 +133,7 @@ const HousePages = () => {
           </motion.h1>
 
           <motion.p
-            className="max-w-prose text-sm sm:text-base md:text-lg text-white"
+            className="max-w-prose text-sm sm:text-base md:text-lg "
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -164,7 +164,7 @@ const HousePages = () => {
         </motion.div>
       </div>
 
-      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 py-12 flex flex-col gap-12 md:gap-16">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6  flex flex-col gap-12 md:gap-16">
         <motion.section
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

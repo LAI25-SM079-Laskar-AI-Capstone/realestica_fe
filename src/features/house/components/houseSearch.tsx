@@ -22,7 +22,7 @@ const HouseSearch = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search properties..."
-        className="flex-1 px-6 py-2 text-sm sm:text-base text-white focus:outline-none"
+        className="flex-1 px-6 py-2 text-sm sm:text-base  focus:outline-none"
       />
       <button
         type="submit"
